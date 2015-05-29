@@ -1,33 +1,6 @@
-class Disc
-
-  def active_disc?
-    current_peg.get_active_peg == self
-  end
-
-  def top_disc_at_destination
-    get_destination_peg.last
-  end
-
-end
-
-class Peg
-    def get_peg(peg_number)
-    instance_variable_get("@peg_#{peg_number}")
-    end
-
-  def get_active_peg
-    get_peg(@active_peg)
-  end
-
-  def get_destination_peg
-    get_peg(@destination_peg)
-  end
-end
-
 class Game
 
   def reset
-
     @moves = 0
   end
 
@@ -40,19 +13,19 @@ class Game
   end
 
   def print_board
-    puts "peg_1 = #{@peg_1}"
-    puts "peg_2 = #{@peg_2}"
-    puts "peg_3 = #{@peg_3}"
+    puts pegs
   end
 
   def what_peg_to_move_from?
     @active_peg = 0
 
-    puts "From what peg (1, 2, or 3) would you like to move a disc?"
+#method to call the number of discs in a string "1, 2, 3, 4, 5, ....or n"
+    puts "From what peg (#{1, 2, 3, ...or n METHOD}) would you like to move a disc?"
     response = gets.chomp
 
+#method to call the number of discs in a string "1, 2, 3, 4, 5, ....or n"
     if /[1-3]/.match(response) == nil
-     puts "Doh! You provided #{response}... 1, 2, or 3 are the only valid responses."
+     puts "Doh! You provided #{response}... (#{1, 2, 3, ...or n METHOD}) are the only valid responses."
      print_board
      return what_peg_to_move_from?
     else
@@ -117,6 +90,47 @@ class Game
   end
 
 end
+
+class Disc
+
+  define_method(:initialize) do |number|
+      @number = number
+  end
+
+#currently does not work
+  def disc_factory(number)
+     disc_array = []
+      number.times do
+          disc_array << Disc.new
+      end
+  disc_array
+  end
+
+  def active_disc?
+    #need to determine if this is necessary
+    current_peg.get_active_peg == self
+  end
+
+  def top_disc_at_destination
+    get_destination_peg.last
+  end
+
+end
+
+class Peg
+    def get_peg(peg_number)
+    instance_variable_get("@peg_#{peg_number}")
+    end
+
+  def get_active_peg
+    get_peg(@active_peg)
+  end
+
+  def get_destination_peg
+    get_peg(@destination_peg)
+  end
+end
+
 
 game = Game.new
 game.start_game
